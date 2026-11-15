@@ -20,9 +20,55 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="/img/infinite-opening.jpeg" />
+    <style>
+      .intro { position:fixed; inset:0; z-index:1000; display:grid; place-items:center; background:#000; color:#fff; opacity:1; transition:opacity .35s ease; animation:intro-failsafe 0s 5s forwards; }
+      .intro__center { width:min(84vw,420px); text-align:center; padding:24px; }
+      .intro__logo { display:block; width:min(100%,320px); height:auto; margin:0 auto; }
+      .intro__percent { margin:8px 0 20px; font:800 clamp(32px,6vw,48px)/1.2 system-ui,sans-serif; font-variant-numeric:tabular-nums; }
+      .intro__name { margin:0; font:600 clamp(10px,2.8vw,13px)/1.6 system-ui,sans-serif; letter-spacing:.3em; color:#a9b1b7; }
+      .intro__track { position:absolute; bottom:0; left:0; width:100%; height:4px; background:#111; }
+      .intro__bar { height:100%; background:linear-gradient(90deg,#1478b5,#35b6e6,#8fe1ff); transform:scaleX(0); transform-origin:left; transition:transform .08s linear; }
+      .intro--done { opacity:0; pointer-events:none; }
+      @keyframes intro-failsafe { to { visibility:hidden; pointer-events:none; } }
+      @media(prefers-reduced-motion:reduce) { .intro { transition:none; } .intro__bar { transition:none; } }
+    </style>
+    <noscript><style>.intro { display:none; }</style></noscript>
   </head>
   <body>
     <script>document.documentElement.classList.add("js")</script>
+    <div class="intro" id="site-intro" role="status" aria-label="Abrindo o site da Infinite Esportes">
+      <div class="intro__center">
+        <img class="intro__logo" src="/img/infinite-opening.jpeg" alt="Infinite Esportes" width="500" height="500" fetchpriority="high" />
+        <p class="intro__percent" aria-hidden="true">0%</p>
+        <p class="intro__name">INFINITE ESPORTES</p>
+      </div>
+      <div class="intro__track" aria-hidden="true"><div class="intro__bar"></div></div>
+    </div>
+    <script>
+      (() => {
+        const intro = document.getElementById('site-intro');
+        const percent = intro.querySelector('.intro__percent');
+        const bar = intro.querySelector('.intro__bar');
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const duration = reduced ? 150 : 1800;
+        const start = performance.now();
+        // Brief brand introduction; the percentage describes this animation.
+        const timer = setInterval(() => {
+          const progress = Math.min(100, Math.round((performance.now() - start) / duration * 100));
+          percent.textContent = progress + '%';
+          bar.style.transform = 'scaleX(' + progress / 100 + ')';
+          if (progress === 100) {
+            clearInterval(timer);
+            setTimeout(() => {
+              intro.classList.add('intro--done');
+              setTimeout(() => intro.remove(), reduced ? 0 : 350);
+            }, reduced ? 0 : 180);
+          }
+        }, 40);
+        setTimeout(() => { clearInterval(timer); intro.remove(); }, 4500);
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
