@@ -2020,3 +2020,22 @@ body { background: var(--bg); color: var(--silver-hi); }
 }
 
 @media (min-width: 601px) and (max-width: 960px) { .modal__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+
+/* Novas fotos de acompanhamento presencial — mosaico sem cortes bruscos */
+.moments__item--academia-acompanhamento,
+.moments__item--academia-aluna,
+.moments__item--academia-execucao,
+.moments__item--academia-orientacao { grid-column: span 1; grid-row: span 1; }
+.moments__item--academia-acompanhamento img { object-position: 55% 47%; }
+.moments__item--academia-aluna img { object-position: 50% 40%; }
+.moments__item--academia-execucao img { object-position: 50% 42%; }
+.moments__item--academia-orientacao img { object-position: 50% 42%; }
+@media (max-width: 900px) {
+  .moments__item--academia-acompanhamento,
+  .moments__item--academia-aluna,
+  .moments__item--academia-execucao,
+  .moments__item--academia-orientacao {
+    grid-column: span 1; grid-row: auto; aspect-ratio: 3 / 4;
+  }
+}
