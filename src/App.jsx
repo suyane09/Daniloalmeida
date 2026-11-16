@@ -172,8 +172,10 @@ const gallery = [
   { id: 'hidro-noite', alt: 'Danilo ao lado da piscina iluminada à noite, com a turma de hidroginástica na água', label: 'Hidroginástica noturna', ratio: 'wide' },
   { id: 'natacao-infantil', alt: 'Aula de natação infantil em piscina coberta, com professor e crianças usando espaguetes', label: 'Natação infantil', ratio: 'wide' },
   { id: 'natacao-adulto', alt: 'Danilo orientando um aluno adulto na beira da piscina', label: 'Natação adulto', ratio: 'tall' },
-  { id: 'hidro-grupo', alt: 'Turma de hidroginástica na piscina, com espaguetes coloridos, sorrindo para a foto', label: 'Turma de hidroginástica', ratio: 'wide' },
   { id: 'costas', alt: 'Danilo de costas na academia, com camisa Personal Trainer', label: 'Na academia', ratio: 'wide' },
+]
+
+const academyGallery = [
   { id: 'academia-acompanhamento', file: 'academia-acompanhamento.webp', alt: 'Danilo acompanhando uma aluna durante o exercício no aparelho extensor de pernas', label: 'Treino acompanhado', ratio: 'tall' },
   { id: 'academia-aluna', file: 'academia-aluna.webp', alt: 'Danilo ao lado de uma aluna na academia após o treino', label: 'Acompanhamento próximo', ratio: 'tall' },
   { id: 'academia-execucao', file: 'academia-execucao.webp', alt: 'Danilo acompanhando uma aluna durante a execução da puxada na polia', label: 'Técnica em cada movimento', ratio: 'tall' },
@@ -416,28 +418,38 @@ function About() {
 }
 
 function Gallery() {
+  const galleryCard = (g, index) => (
+    <figure key={g.id} className={`moments__item moments__item--${g.ratio} moments__item--${g.id}`}>
+      <img
+        src={`img/${g.file ?? `${g.id}-800.webp`}`}
+        alt={g.alt} loading="lazy" decoding="async"
+      />
+      <figcaption className="gallery__caption">
+        <span>{String(index + 1).padStart(2, '0')}</span>
+        <span>{g.label}</span>
+      </figcaption>
+    </figure>
+  )
+
   return (
     <section className="sec gallery-sec" id="galeria">
       <div className="wrap">
         <h2 className="h2">Na academia e na piscina</h2>
-        <div className="moments">
-          {gallery.map((g, i) => (
-            <figure key={g.id} className={`moments__item moments__item--${g.ratio} moments__item--${g.id}`}>
-              <img
-                src={`img/${g.file ?? `${g.id}-800.webp`}`}
-                alt={g.alt} loading="lazy" decoding="async"
-              />
-              <figcaption className="gallery__caption">
-                <span>{String(i + 1).padStart(2, '0')}</span>
-                <span>{g.label}</span>
-              </figcaption>
-            </figure>
-          ))}
+        <div className="moments moments--overview">
+          {gallery.map((g, i) => galleryCard(g, i))}
           <div className="moments__cta">
             <p className="moments__eyebrow">ACOMPANHE NO INSTAGRAM</p>
             <h3>Mais treinos, aulas e bastidores.</h3>
             <Btn href={INSTAGRAM_HREF} external>@{INSTAGRAM} ↗</Btn>
           </div>
+        </div>
+
+        <div className="gallery-training__intro">
+          <p className="gallery-training__eyebrow">MUSCULAÇÃO COM ACOMPANHAMENTO</p>
+          <h3>Treino de perto, em cada movimento.</h3>
+        </div>
+        <div className="moments moments--training">
+          {academyGallery.map((g, i) => galleryCard(g, gallery.length + i))}
         </div>
       </div>
     </section>
