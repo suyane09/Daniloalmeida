@@ -2109,3 +2109,113 @@ body { background: var(--bg); color: var(--silver-hi); }
     min-height: 215px;
   }
 }
+
+/* Consultorias — cartões compactos, sem colunas internas apertadas */
+.services .services__grid {
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(14px, 1.8vw, 22px);
+}
+.services .services__card {
+  padding: clamp(20px, 2.3vw, 30px);
+  border-radius: 12px;
+}
+.services .services__card-top {
+  padding-bottom: 13px;
+  margin-bottom: 17px;
+}
+.services .services__card-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  gap: 18px;
+}
+.services .services__overview h3 {
+  font-size: clamp(1.55rem, 2.2vw, 1.95rem);
+  line-height: 1.14;
+  max-width: none;
+}
+.services .services__description {
+  margin-top: 10px;
+  font-size: .92rem;
+  line-height: 1.53;
+}
+.services .services__promise {
+  margin-top: 11px;
+  font-size: .84rem;
+  line-height: 1.42;
+}
+.services .services__includes {
+  gap: 8px;
+  margin-top: 16px;
+}
+.services .services__includes li {
+  padding-left: 19px;
+  font-size: .87rem;
+  line-height: 1.45;
+}
+.services .services__details {
+  margin-top: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  border-left: 0;
+  border-top: 1px solid rgba(198,199,196,.18);
+  padding: 17px 0 0;
+  min-width: 0;
+}
+.services .services__cost {
+  padding: 0;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.services .services__price {
+  gap: 3px 8px;
+}
+.services .services__price strong {
+  font-size: clamp(1.55rem, 2.55vw, 2.05rem);
+  letter-spacing: -.04em;
+}
+.services .services__price > span {
+  font-size: .75rem;
+}
+.services .services__action {
+  width: auto;
+  flex: 0 0 auto;
+  margin: 0;
+  min-height: 44px;
+  padding: 10px 14px;
+  gap: 9px;
+  font-size: .81rem;
+  line-height: 1.2;
+}
+@media (min-width: 840px) {
+  .services .services__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 839px) {
+  .services .services__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+@media (max-width: 450px) {
+  .services .services__details {
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+  .services .services__action {
+    min-height: 44px;
+  }
+}
+@media (max-width: 350px) {
+  .services .services__details {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .services .services__action {
+    justify-content: center;
+    width: 100%;
+  }
+}
